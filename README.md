@@ -39,19 +39,19 @@ sudo hugeadm --create-mounts
 ```
 Lets break this down:
 
-    - `hugeadm`: hugepage administration tool.
-        - `--obey-mempolicy`: If running under `numactl` to control NUMA domains, this flag forces `hugeadm` to obey its current NUMA policy.
-        Huge pages are allocated per NUMA node, so it's important to make sure this is correct for your workload.
+- `hugeadm`: hugepage administration tool.
+    - `--obey-mempolicy`: If running under `numactl` to control NUMA domains, this flag forces `hugeadm` to obey its current NUMA policy.
+    Huge pages are allocated per NUMA node, so it's important to make sure this is correct for your workload.
 
-        - `--pool-pages-min=1G:64`: Minimum number of pages to allocate.
-        Here, we are allocating 64 `1 GB` huge pages.
-        We can also allocate `2 MB` huge pages by using `2M` instead of `1G`.
+    - `--pool-pages-min=1G:64`: Minimum number of pages to allocate.
+    Here, we are allocating 64 `1 GB` huge pages.
+    We can also allocate `2 MB` huge pages by using `2M` instead of `1G`.
 
-    - `numactl`: Select which NUMA domain to allocate on
-        - `--cpunodebind=1`: Allocate to NUMA node 1
-        - `--membind=1`: Allocate to NUMA node 1
+- `numactl`: Select which NUMA domain to allocate on
+    - `--cpunodebind=1`: Allocate to NUMA node 1
+    - `--membind=1`: Allocate to NUMA node 1
 
-    - `sudo`: We're messing with OS level stuff. We need superuser privileges.
+- `sudo`: We're messing with OS level stuff. We need superuser privileges.
 
 **NOTE**: It's best to allocate huge pages early after a system reboot.
 Hugepages must be made of physically contiguous memory.
