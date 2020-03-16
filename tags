@@ -1,0 +1,24 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+AbstractPageSize	src/HugepageMmap.jl	/^abstract type AbstractPageSize end$/;"	f
+HugepageMmap	src/HugepageMmap.jl	/^module HugepageMmap$/;"	f
+MAP_HUGETLB	src/HugepageMmap.jl	/^const MAP_HUGETLB    = Cint(0x40000)$/;"	v
+MAP_HUGE_1GB	src/HugepageMmap.jl	/^const MAP_HUGE_1GB   = Cint(30 << MAP_HUGE_SHIFT)$/;"	v
+MAP_HUGE_2MB	src/HugepageMmap.jl	/^const MAP_HUGE_2MB   = Cint(21 << MAP_HUGE_SHIFT)$/;"	v
+MAP_HUGE_SHIFT	src/HugepageMmap.jl	/^const MAP_HUGE_SHIFT = Cint(26)$/;"	v
+PageSize1G	src/HugepageMmap.jl	/^struct PageSize1G <: AbstractPageSize end$/;"	f
+PageSize2M	src/HugepageMmap.jl	/^struct PageSize2M <: AbstractPageSize end$/;"	f
+PageSize4K	src/HugepageMmap.jl	/^struct PageSize4K <: AbstractPageSize end$/;"	f
+align	src/HugepageMmap.jl	/^align(x, ::PageSize4K) = x$/;"	f
+align	src/HugepageMmap.jl	/^align(x, p::AbstractPageSize) = ceil(Int, x \/ pagesize(p)) * pagesize(p)$/;"	f
+extraflags	src/HugepageMmap.jl	/^extraflags(::PageSize1G) = MAP_HUGETLB | MAP_HUGE_1GB$/;"	f
+extraflags	src/HugepageMmap.jl	/^extraflags(::PageSize2M) = MAP_HUGETLB | MAP_HUGE_2MB$/;"	f
+extraflags	src/HugepageMmap.jl	/^extraflags(::PageSize4K) = Cint(0)$/;"	f
+hugepage_mmap	src/HugepageMmap.jl	/^function hugepage_mmap(::Type{T}, len::Integer, pagesize::AbstractPageSize) where {T}$/;"	f
+pagesize	src/HugepageMmap.jl	/^pagesize(::PageSize1G) = 1073741824$/;"	f
+pagesize	src/HugepageMmap.jl	/^pagesize(::PageSize2M) = 2097152$/;"	f
+pagesize	src/HugepageMmap.jl	/^pagesize(::PageSize4K) = 4096$/;"	f
