@@ -30,15 +30,19 @@ align(x, p::AbstractPageSize) = ceil(Int, x / pagesize(p)) * pagesize(p)
 align(x, ::PageSize4K) = x
 
 # This is heavily based on the Mmap stdlib
-"""
-    hugepage_mmap(::Type{T}, len, pagesize::AbstractPageSize)
+function hugepage_mmap(::Type{T}, pagesize::AbstractPageSize, dims::Integer...) where {T}
+    return hugepage_mmap(T, pagesize, convert.(Int, dims))
+end
 
-Allocate a `Vector{T}` with length `len` backed by `pagesize`.
+"""
+    hugepage_mmap(::Type{T}, pagesize::AbstractPageSize, dims...)
+
+Allocate a `Array{T}` with dimensions `dims` backed by `pagesize`.
 Choices for `pagesize` are `PageSize4k()`, `PageSize2m()`, or `PageSize1G()`.
 Make sure the corresponding hugepages are already allocated on your system.
 """
-function hugepage_mmap(::Type{T}, len::Integer, pagesize::AbstractPageSize) where {T}
-    mmaplen = sizeof(T) * len
+function hugepage_mmap(::Type{T}, pagesize::AbstractPageSize, dims::NTuple{N,Int}) where {N,T}
+    mmaplen = sizeof(T) * prod(dims)
 
     # Build the PROT flags - we want to be able to read and write.
     prot = Mmap.PROT_READ | Mmap.PROT_WRITE
@@ -63,7 +67,7 @@ function hugepage_mmap(::Type{T}, len::Integer, pagesize::AbstractPageSize) wher
 
     # Wrap this into an Array and attach a finalizer that will unmap the underlying pointer
     # when the Array if GC'd
-    A = Base.unsafe_wrap(Array, convert(Ptr{T}, UInt(ptr)), len)
+    A = Base.unsafe_wrap(Array, Ptr{T}(ptr), dims)
     finalizer(A) do x
         systemerror(
             "munmap",
